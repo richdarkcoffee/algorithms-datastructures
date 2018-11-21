@@ -56,13 +56,20 @@ Graph.prototype.deleteedge = function(node1, node2) {
 }
 
 Graph.prototype.deletenode = function(node) {
-    tmp1 = this.search(node);
+    debugger;
+    tmp1 = this.nodevalue.indexOf(node);
     if (tmp1 < 0) return false;
     // Delete all of the edges it's connected to
-    this.graph[this.search(node)] = [];
-    // Delete all of the edges that are connected to it
-    // for (i=0;i<)
-    // Delete the node
+    this.graph.splice(tmp1,1);
+    // Delete it from the adjacency graph
+    // Delete of the edges that are connected to it
+        for (i=0;i< (this.nodevalue.length - 1) ; i++) {
+        tmp2 = this.graph[i].indexOf(tmp1);
+        if (tmp2 >= 0) this.graph[i].splice(tmp2,1);
+        this.adjacency[i].splice(tmp1,1);
+    }
+    this.adjacency.splice(tmp1,1);
+    this.nodevalue.splice(tmp1,1);
 } 
 
 Graph.prototype.printgraph = function() {
@@ -85,17 +92,17 @@ Graph.prototype.findroute = function(node1, node2) {
 
 
 thistest = new Graph();
-thistest.printgraph();
+// thistest.printgraph();
 thistest.addnode('Richard');
-console.log(thistest);
+// console.log(thistest);
 thistest.printgraph();
 thistest.addnode('Fred');
 thistest.addnode('Kate');
 thistest.addnode('Richard');
-console.log(thistest);
+// console.log(thistest);
 thistest.addedge('Richard','Kate',false);
 thistest.addedge('Kate','Fred',false);
-thistest.printgraph();
+// thistest.printgraph();
 thistest.addnode('Sarah');
 thistest.addedge('Sarah','Richard',false);
 thistest.addnode('Claire');
@@ -103,6 +110,11 @@ thistest.addedge('Richard','Claire',false);
 thistest.addedge('Claire','Sarah',true);
 thistest.printgraph();
 console.log(thistest);
-thistest.deleteedge('Richard','Claire');
-thistest.printgraph();
-console.log(thistest);
+// thistest.deleteedge('Richard','Claire');
+// thistest.printgraph();
+// console.log(thistest);
+// thistest.deletenode('Claire');
+// console.log(thistest);
+// thistest.printgraph();
+
+
