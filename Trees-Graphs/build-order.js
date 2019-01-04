@@ -51,19 +51,22 @@ Graph.prototype.search = function(project) {
     return 0;
 }
 
-// Search for all nodes without dependencies and create a queue to browse
-
+// Search for all nodes without dependencies and create a Javascript map
 Graph.prototype.searchnondeps = function() {
     nondepMap = new Map();
     
     for (i=0;i<this.nodes.length;i++) {
         for (j=0;j<this.nodes[i].children.length;j++) {
             // Add children and count of children to Map if they do not already exist
-            if (nondepMap.get(this.nodes[i].children[j].value) == undefined) {
-                nondepMap.set(this.nodes[i].children[j].value, 1);
-            } else {
-                nondepMap.set(this.nodes[i].children[j].value, 1 + nondepMap.get(this.nodes[i].children[j].value));
+            if (nondepMap.get(this.nodes[i].children[j]) == undefined) {
+                nondepMap.set(this.nodes[i].children[j], 1);
+            } else { // Increment count of children in Map if another dependency is found
+                nondepMap.set(this.nodes[i].children[j], 1 + nondepMap.get(this.nodes[i].children[j]));
             }
+        }
+            // Add parent to Map if they do not already exist there
+            if (nondepMap.get(this.nodes[i]) == undefined) {
+            nondepMap.set(this.nodes[i], 0);
         }
     }
     return nondepMap;
